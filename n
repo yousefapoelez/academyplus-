@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AcademyPlus - موقع تعليمي</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        header { background: #4CAF50; color: white; padding: 20px; text-align: center; }
+        nav { background: #333; color: white; padding: 10px; text-align: center; }
+        nav a { color: white; text-decoration: none; margin: 0 15px; font-weight: bold; }
+        nav a:hover { color: #4CAF50; }
+        section { padding: 20px; display: none; }
+        footer { background: #333; color: white; text-align: center; padding: 10px; margin-top: 20px; }
+        .courses, .course-list, .instructor-list { display: flex; flex-wrap: wrap; justify-content: space-around; }
+        .course, .course-item, .instructor { border: 1px solid #ccc; border-radius: 10px; padding: 15px; margin: 10px; width: 30%; text-align: center; }
+        .course img, .course-item img { width: 100%; border-radius: 10px; }
+        .instructor img { width: 100px; height: 100px; border-radius: 50%; margin-bottom: 10px; }
+        button { background: #4CAF50; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #45a049; }
+        .video-container { display: none; margin-top: 20px; }
+        video { width: 100%; border-radius: 10px; }
+        .video-list { list-style: none; padding: 0; }
+        .video-list li { margin: 5px 0; cursor: pointer; color: #4CAF50; }
+        .video-list li:hover { text-decoration: underline; }
+
+        /* واجهة تسجيل الدخول */
+        .login-container {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            background-color: #f4f4f4;
+        }
+        .login-container h2 {
+            text-align: center;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .login-container button:hover {
+            background-color: #45a049;
+        }
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- الرأس -->
+    <header>
+        <h1>مرحبًا بك في AcademyPlus</h1>
+        <p>تعلم بسهولة واحترافية مع أفضل الدورات التدريبية</p>
+    </header>
+
+    <!-- التنقل -->
+    <nav>
+        <a href="#" onclick="showSection('home')">الرئيسية</a>
+        <a href="#" onclick="showSection('courses')">الكورسات</a>
+        <a href="#" onclick="showSection('instructors')">المدربين</a>
+        <a href="#" onclick="showSection('login')">تسجيل الدخول</a>
+    </nav>
+
+    <!-- واجهة تسجيل الدخول -->
+    <section id="login">
+        <div class="login-container">
+            <h2>تسجيل الدخول</h2>
+            <form id="loginForm" onsubmit="return login(event)">
+                <input type="text" id="username" placeholder="اسم المستخدم" required>
+                <input type="password" id="password" placeholder="كلمة المرور" required>
+                <button type="submit">دخول</button>
+            </form>
+            <div id="errorMessage" class="error-message"></div>
+        </div>
+    </section>
+
+    <!-- الصفحة الرئيسية -->
+    <section id="home">
+        <h2>الرئيسية</h2>
+        <div class="courses">
+            <div class="course">
+                <img src="math.jpg" alt="كورس الرياضيات">
+                <h3>كورس الرياضيات</h3>
+                <p> الرياضيات  .</p>
+                <button onclick="showCourseVideos('math')">عرض الفيديوهات</button>
+            </div>
+            <div class="course">
+                <img src="‏‏تاريخ ايمن القماش (3) - نسخة.jpg" alt="كورس التاريخ">
+                <h3>كورس التاريخ</h3>
+                <p>مدخلك إلى عالم التاريخ  .</p>
+                <button onclick="showCourseVideos('programming')">عرض الفيديوهات</button>
+            </div>
+            <div class="course">
+                <img src="‏‏تاريخ محمد السيد (3) - نسخة.jpg" alt="كورس التاريخ">
+                <h3>كورس التاريخ</h3>
+                <p>   مدخلك إلى عالم التاريخ   .</p>
+                <button onclick="showCourseVideos('biology')">عرض الفيديوهات</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- صفحة الكورسات -->
+    <section id="courses">
+        <h2>الكورسات</h2>
+        <div class="course-list">
+            <div class="course-item">
+                <img src="‏‏math - نسخة.jpg" alt="كورس الرياضيات">
+                <h3>كورس الرياضيات</h3>
+                <p>السعر: $50</p>
+                <button onclick="showCourseVideos('math')">عرض الفيديوهات</button>
+            </div>
+            <div class="course-item">
+                <img src="تاريخ ايمن القماش (0).jpg" alt="كورس التاريخ">
+                <h3>كورس التاريخ</h3>
+                <p>السعر: $30</p>
+                <button onclick="showCourseVideos('history')">عرض الفيديوهات</button>
+            </div>
+            <div class="course-item">
+                <img src="تاريخ محمد السيد (1).jpg" alt=" كورس التاريخ   ">
+                <h3>كورس التاريخ</h3>
+                <p>السعر: $25</p>
+                <button onclick="showCourseVideos('history2')">عرض الفيديوهات</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- صفحة المدربين -->
+    <section id="instructors">
+        <h2>المدربين</h2>
+        <div class="instructor-list">
+            <div class="instructor">
+                <img src="math.jpg" alt="استاذ الرياضيات">
+                <h3>أ. محمد عفيفى</h3>
+                <p>متخصص في تعليم الرياضيات بخبرة 30 سنة.</p>
+            </div>
+            <div class="instructor">
+                <img src="‏‏تاريخ ايمن القماش (3) - نسخة.jpg" alt="استاذ التاريخ">
+                <h3>ا. ايمن القماش</h3>
+                <p>أستاذ التاريخ للثانوية العامة.</p>
+            </div>
+            <div class="instructor">
+                <img src="تاريخ محمد السيد (1).jpg" alt="استاذ التاريخ">
+                <h3>ا. محمد السيد</h3>
+                <p>أستاذ في مادة التاريخ خبرة أكثر من 30 عامًا.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- تذييل -->
+    <footer>
+        <p>جميع الحقوق محفوظة © 2024 AcademyPlus</p>
+    </footer>
+
+    <!-- فيديوهات الدورات -->
+    <div id="video-container" class="video-container">
+        <h3>اختَر الدرس من القائمة:</h3>
+        <ul id="video-list" class="video-list">
+            <!-- سيتم ملء القائمة ديناميكيًا عبر JavaScript -->
+        </ul>
+        <video id="course-video" controls>
+            <source id="video-source" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <!-- نموذج إدخال الكود -->
+        <div id="access-form" style="display: none;">
+            <h2>أدخل كود الفيديو</h2>
+            <input type="text" id="accessCode" placeholder="أدخل الكود هنا" required>
+            <button onclick="verifyAccessCode()">تحقق</button>
+            <div id="accessError" class="error-message"></div>
+        </div>
+    </div>
+
+    <script>
+        // بيانات تسجيل الدخول (تجريبية)
+        const users = {
+            'user1': 'password123',
+            'user2': 'mypassword',
+        };
+
+        // دالة لعرض الأقسام حسب حالة تسجيل الدخول
+        function showSection(sectionId) {
+            const isLoggedIn = sessionStorage.getItem('loggedIn') === 'true';
+
+            // إذا كانت الصفحة المطلوبة ليست صفحة تسجيل الدخول ولم يتم تسجيل الدخول بعد
+            if (sectionId !== 'login' && !isLoggedIn) {
+                alert('يرجى تسجيل الدخول أولاً.');
+                showSection('login');  // إعادة توجيه المستخدم إلى صفحة تسجيل الدخول
+                return;
+            }
+
+            // إخفاء جميع الأقسام وعرض القسم المطلوب
+            document.querySelectorAll('section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        // دالة تسجيل الدخول
+        function login(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // تحقق من بيانات تسجيل الدخول
+            if (username === 'admin' && password === '01094358517')  {
+                sessionStorage.setItem('loggedIn', 'true');
+                showSection('home');  // الانتقال إلى الصفحة الرئيسية بعد تسجيل الدخول
+                document.getElementById('errorMessage').textContent = '';  // مسح أي رسالة خطأ
+            } else {
+                document.getElementById('errorMessage').textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة.';
+            }
+        }
+
+        // دالة لتسجيل الخروج
+        function logout() {
+            sessionStorage.removeItem('loggedIn');  // إزالة حالة تسجيل الدخول
+            showSection('login');  // العودة إلى صفحة تسجيل الدخول
+        }
+
+        const videoAccessCodes = {
+            'فيديو تجريبى2.mp4': '12345',
+            'videos/programming-lesson1.mp4': '67890',
+            'videos/biology-lesson1.mp4': '11223',
+        };
+
+        // دالة لعرض فيديوهات الدورة
+        function showCourseVideos(courseName) {
+            const videos = {
+                math: [
+                    { title: 'الباب الأول: الارتباط والانحدار', videoSrc: 'فيديو تجريبى2.mp4' },
+                    { title: 'الباب الثاني: مقايس متقدمه فى الاحصاء', videoSrc: 'videos/math-lesson2.mp4' },
+                ],
+                programming: [
+                    { title: 'الباب الأول: الحمله الفرنسيه', videoSrc: 'videos/programming-lesson1.mp4' },
+                    { title: 'الباب الثاني: محمد علي', videoSrc: 'videos/programming-lesson2.mp4' },
+                ],
+                biology: [
+                    { title: 'الباب الأول: الخلايا', videoSrc: 'videos/biology-lesson1.mp4' },
+                    { title: 'الباب الثاني: جهاز الهضم', videoSrc: 'videos/biology-lesson2.mp4' },
+                ]
+            };
+
+            const videoList = document.getElementById('video-list');
+            const videoContainer = document.getElementById('video-container');
+            const courseVideos = videos[courseName];
+
+            videoList.innerHTML = '';
+
+            courseVideos.forEach(function(video) {
+                const li = document.createElement('li');
+                li.textContent = video.title;
+                li.onclick = function() {
+                    showAccessForm(video.videoSrc);
+                };
+                videoList.appendChild(li);
+            });
+
+            videoContainer.style.display = 'block';
+        }
+
+        // دالة لإظهار نموذج إدخال الكود
+        function showAccessForm(videoFile) {
+            const videoCode = videoAccessCodes[videoFile];
+            sessionStorage.setItem('currentVideoCode', videoCode);
+            sessionStorage.setItem('currentVideoFile', videoFile);
+            document.getElementById('access-form').style.display = 'block';
+        }
+
+        // دالة للتحقق من الكود المدخل
+        function verifyAccessCode() {
+            const enteredCode = document.getElementById('accessCode').value;
+            const correctCode = sessionStorage.getItem('currentVideoCode');
+            const videoFile = sessionStorage.getItem('currentVideoFile');
+            const errorElement = document.getElementById('accessError');
+
+            if (enteredCode === correctCode) {
+                errorElement.textContent = '';
+                playVideo(videoFile);
+            } else {
+                errorElement.textContent = 'الكود المدخل غير صحيح. حاول مرة أخرى.';
+            }
+        }
+
+        // دالة لتشغيل الفيديو
+        function playVideo(videoFile) {
+            const videoElement = document.getElementById('course-video');
+            const videoSource = document.getElementById('video-source');
+            videoSource.src = videoFile;
+            videoElement.load();
+            videoElement.play();
+            document.getElementById('access-form').style.display = 'none';
+        }
+
+        // بدء عرض الصفحة الرئيسية عند تحميل الصفحة
+        window.onload = function() {
+            showSection('home');
+        };
+
+    </script>
+
+</body>
+</html>
